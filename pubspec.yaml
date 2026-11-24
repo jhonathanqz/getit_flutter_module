@@ -3,6 +3,8 @@ description: >-
   Dependency injection for Flutter with a get_it-compatible service locator
   and modules that register on route entry and auto-dispose on exit.
 version: 0.1.0
+repository: https://github.com/jhonathanqz/getit_modular
+issue_tracker: https://github.com/jhonathanqz/getit_modular/issues
 
 topics:
   - dependency-injection

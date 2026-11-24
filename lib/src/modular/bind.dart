@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import '../core/get_it.dart';
+import '../core/m_get_it.dart';
 import 'injector.dart';
 import 'lifecycle.dart';
 
@@ -8,7 +8,7 @@ typedef BindRegister<T> = T Function(Injector i);
 typedef BindAsyncRegister<T> = Future<T> Function(Injector i);
 typedef BindParamRegister<T, P1, P2> = T Function(Injector i, P1 p1, P2 p2);
 
-/// Forma como o [Bind] é registrado no [GetIt].
+/// Forma como o [Bind] é registrado no [MGetIt].
 enum BindType {
   singleton,
   singletonAsync,
@@ -149,7 +149,7 @@ class Bind<T extends Object> {
   final BindRegister<T>? _register;
   final BindAsyncRegister<T>? _registerAsync;
 
-  /// Equivalente ao `instanceName` do get_it.
+  /// Equivalente ao `instanceName` do [MGetIt].
   final String? tag;
 
   /// Quando `true`, a instância nunca é removida, mesmo saindo do escopo.
@@ -181,7 +181,8 @@ class Bind<T extends Object> {
       type == BindType.singletonAsync ||
       (type == BindType.singleton && dependsOn.isNotEmpty);
 
-  bool isRegisteredIn(GetIt getIt) => getIt.isRegistered<T>(instanceName: tag);
+  bool isRegisteredIn(MGetIt mGetIt) =>
+      mGetIt.isRegistered<T>(instanceName: tag);
 
   T _afterCreate(T object, void Function(Object)? onCreated) {
     if (object is ModularLifecycle) object.onInit();
@@ -198,10 +199,10 @@ class Bind<T extends Object> {
   /// Descarta uma instância criada por este bind (usado para factories).
   FutureOr<dynamic> disposeInstance(Object object) => _dispose(object as T);
 
-  /// Registra o bind no [getIt]. [onFactoryCreated] é chamado a cada
+  /// Registra o bind no [mGetIt]. [onFactoryCreated] é chamado a cada
   /// instância criada por factories (para dispose posterior).
   void register(
-    GetIt getIt, {
+    MGetIt mGetIt, {
     required Injector injector,
     void Function(Object instance)? onFactoryCreated,
   }) {
@@ -212,14 +213,14 @@ class Bind<T extends Object> {
     switch (type) {
       case BindType.singleton:
         if (dependsOn.isEmpty) {
-          getIt.registerSingleton<T>(
+          mGetIt.registerSingleton<T>(
             create(),
             instanceName: tag,
             dispose: _dispose,
             signalsReady: false,
           );
         } else {
-          getIt.registerSingletonWithDependencies<T>(
+          mGetIt.registerSingletonWithDependencies<T>(
             create,
             instanceName: tag,
             dependsOn: dependsOn,
@@ -228,7 +229,7 @@ class Bind<T extends Object> {
           );
         }
       case BindType.singletonAsync:
-        getIt.registerSingletonAsync<T>(
+        mGetIt.registerSingletonAsync<T>(
           createAsync,
           instanceName: tag,
           dependsOn: dependsOn.isEmpty ? null : dependsOn,
@@ -236,24 +237,24 @@ class Bind<T extends Object> {
           signalsReady: false,
         );
       case BindType.lazySingleton:
-        getIt.registerLazySingleton<T>(
+        mGetIt.registerLazySingleton<T>(
           create,
           instanceName: tag,
           dispose: _dispose,
         );
       case BindType.lazySingletonAsync:
-        getIt.registerLazySingletonAsync<T>(
+        mGetIt.registerLazySingletonAsync<T>(
           createAsync,
           instanceName: tag,
           dispose: _dispose,
         );
       case BindType.factory:
-        getIt.registerFactory<T>(
+        mGetIt.registerFactory<T>(
           () => _afterCreate(_register!(injector), onFactoryCreated),
           instanceName: tag,
         );
       case BindType.factoryAsync:
-        getIt.registerFactoryAsync<T>(
+        mGetIt.registerFactoryAsync<T>(
           () async =>
               _afterCreate(await _registerAsync!(injector), onFactoryCreated),
           instanceName: tag,
@@ -263,10 +264,10 @@ class Bind<T extends Object> {
     }
   }
 
-  /// Remove o bind do [getIt], executando o dispose da instância.
-  FutureOr<dynamic> unregister(GetIt getIt) {
-    if (!getIt.isRegistered<T>(instanceName: tag)) return null;
-    return getIt.unregister<T>(instanceName: tag);
+  /// Remove o bind do [mGetIt], executando o dispose da instância.
+  FutureOr<dynamic> unregister(MGetIt mGetIt) {
+    if (!mGetIt.isRegistered<T>(instanceName: tag)) return null;
+    return mGetIt.unregister<T>(instanceName: tag);
   }
 
   @override
@@ -283,11 +284,11 @@ class _ParamBind<T extends Object, P1, P2> extends Bind<T> {
 
   @override
   void register(
-    GetIt getIt, {
+    MGetIt mGetIt, {
     required Injector injector,
     void Function(Object instance)? onFactoryCreated,
   }) {
-    getIt.registerFactoryParam<T, P1, P2>(
+    mGetIt.registerFactoryParam<T, P1, P2>(
       (p1, p2) =>
           _afterCreate(_paramRegister(injector, p1, p2), onFactoryCreated),
       instanceName: tag,

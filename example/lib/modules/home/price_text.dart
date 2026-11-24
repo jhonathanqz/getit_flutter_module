@@ -11,8 +11,7 @@ class PriceText extends StatelessWidget {
   final TextAlign? textAlign;
 
   @override
-  Widget build(BuildContext context) =>
-      Text(
+  Widget build(BuildContext context) => Text(
         context.get<PriceLabel>(param1: value).text,
         style: style,
         textAlign: textAlign,

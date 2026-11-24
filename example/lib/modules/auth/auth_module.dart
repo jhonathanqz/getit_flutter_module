@@ -12,7 +12,7 @@ import 'register/register_password_page.dart';
 /// * `/Auth/Login`
 /// * `/Auth/Register`           (sub-módulo, etapa 1)
 /// * `/Auth/Register/Password`  (sub-módulo, etapa 2)
-class AuthModule extends GetItModule {
+class AuthModule extends MGetItModule {
   @override
   String get moduleRouteName => '/Auth';
 
@@ -29,8 +29,8 @@ class AuthModule extends GetItModule {
   void onDispose(Injector i) => debugPrint('<< saiu do módulo Auth');
 
   @override
-  List<GetItRouter> get pages => [
-        GetItPageRouter(
+  List<MGetItRouter> get pages => [
+        MGetItPageRouter(
           name: '/Login',
           bindings: [
             Bind.lazySingleton<LoginController>((i) => LoginController(i())),
@@ -39,7 +39,7 @@ class AuthModule extends GetItModule {
         ),
         // O RegisterController vive enquanto qualquer etapa do cadastro
         // estiver aberta: os dados digitados passam de uma tela para outra.
-        GetItModuleRouter(
+        MGetItModuleRouter(
           name: '/Register',
           bindings: [
             Bind.lazySingleton<RegisterController>(
@@ -47,8 +47,9 @@ class AuthModule extends GetItModule {
             ),
           ],
           pages: [
-            GetItPageRouter(name: '/', builder: (_) => const RegisterNamePage()),
-            GetItPageRouter(
+            MGetItPageRouter(
+                name: '/', builder: (_) => const RegisterNamePage()),
+            MGetItPageRouter(
               name: '/Password',
               builder: (_) => const RegisterPasswordPage(),
             ),

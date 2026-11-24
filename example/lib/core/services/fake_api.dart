@@ -36,19 +36,51 @@ class FakeApi {
   final Duration latency;
 
   static const _products = [
-    Product(id: 1, name: 'Café especial', price: 32.9, emoji: '☕', description: 'Grãos 100% arábica torrados na semana.'),
-    Product(id: 2, name: 'Pão de queijo', price: 18.5, emoji: '🧀', description: 'Pacote com 20 unidades, direto de Minas.'),
-    Product(id: 3, name: 'Açaí', price: 24.0, emoji: '🍇', description: 'Pote de 500 ml com granola e banana.'),
-    Product(id: 4, name: 'Brigadeiro', price: 3.5, emoji: '🍫', description: 'Brigadeiro gourmet de chocolate belga.'),
-    Product(id: 5, name: 'Coxinha', price: 7.0, emoji: '🍗', description: 'Coxinha de frango com catupiry.'),
-    Product(id: 6, name: 'Guaraná', price: 6.5, emoji: '🥤', description: 'Lata de 350 ml bem gelada.'),
+    Product(
+        id: 1,
+        name: 'Café especial',
+        price: 32.9,
+        emoji: '☕',
+        description: 'Grãos 100% arábica torrados na semana.'),
+    Product(
+        id: 2,
+        name: 'Pão de queijo',
+        price: 18.5,
+        emoji: '🧀',
+        description: 'Pacote com 20 unidades, direto de Minas.'),
+    Product(
+        id: 3,
+        name: 'Açaí',
+        price: 24.0,
+        emoji: '🍇',
+        description: 'Pote de 500 ml com granola e banana.'),
+    Product(
+        id: 4,
+        name: 'Brigadeiro',
+        price: 3.5,
+        emoji: '🍫',
+        description: 'Brigadeiro gourmet de chocolate belga.'),
+    Product(
+        id: 5,
+        name: 'Coxinha',
+        price: 7.0,
+        emoji: '🍗',
+        description: 'Coxinha de frango com catupiry.'),
+    Product(
+        id: 6,
+        name: 'Guaraná',
+        price: 6.5,
+        emoji: '🥤',
+        description: 'Lata de 350 ml bem gelada.'),
   ];
 
   Future<void> _wait() => Future<void>.delayed(latency);
 
   Future<User> login(String email, String password) async {
     await _wait();
-    if (password.length < 4) throw AuthException('Senha inválida (mínimo 4 caracteres)');
+    if (password.length < 4) {
+      throw AuthException('Senha inválida (mínimo 4 caracteres)');
+    }
     return User(name: email.split('@').first, email: email);
   }
 

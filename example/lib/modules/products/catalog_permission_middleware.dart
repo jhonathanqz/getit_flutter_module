@@ -5,7 +5,7 @@ import '../../core/services/fake_api.dart';
 
 /// Middleware assíncrono: consulta a API antes de liberar o catálogo.
 /// Enquanto executa, o [loader] é entregue ao `builderAsync` da página.
-class CatalogPermissionMiddleware extends GetItAsyncMiddleware {
+class CatalogPermissionMiddleware extends MGetItAsyncMiddleware {
   const CatalogPermissionMiddleware();
 
   @override

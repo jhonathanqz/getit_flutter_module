@@ -4,7 +4,7 @@ import 'bind.dart';
 
 /// Log simples do ciclo de vida dos escopos e binds.
 ///
-/// Ative com `GetItModular(logEnabled: true)` ou `ModularLogger.enabled = true`.
+/// Ative com `MGetItModular(logEnabled: true)` ou `ModularLogger.enabled = true`.
 abstract final class ModularLogger {
   static bool enabled = false;
 

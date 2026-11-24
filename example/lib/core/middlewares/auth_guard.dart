@@ -4,7 +4,7 @@ import 'package:getit_modular/getit_modular.dart';
 import '../services/session_store.dart';
 
 /// Bloqueia rotas que exigem login e redireciona para o login.
-class AuthGuard extends GetItSyncMiddleware {
+class AuthGuard extends MGetItSyncMiddleware {
   const AuthGuard();
 
   @override

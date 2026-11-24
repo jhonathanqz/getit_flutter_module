@@ -4,7 +4,7 @@ import 'package:getit_modular/getit_modular.dart';
 import '../../core/services/fake_api.dart';
 import '../../core/services/session_store.dart';
 
-/// Registrado via [GetItModularWidget]: existe apenas enquanto a aba de
+/// Registrado via [MGetItModularWidget]: existe apenas enquanto a aba de
 /// perfil está visível.
 class ProfileController with ModularLifecycle {
   ProfileController(this._session);

@@ -27,7 +27,7 @@ class App extends StatelessWidget {
       LogStore.instance.add(message);
     };
 
-    return GetItModular(
+    return MGetItModular(
       logEnabled: true,
       bindings: AppBindings(latency: latency),
       modules: [AuthModule(), HomeModule(), ProductsModule()],

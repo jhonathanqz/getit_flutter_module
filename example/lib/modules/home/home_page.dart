@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
             offstage: _index != 0,
             child: TickerMode(
               enabled: _index == 0,
-              child: GetItRouteOutlet(
+              child: MGetItRouteOutlet(
                 navigatorKey: _productsNavigator,
                 initialRoute: '/Products',
               ),

@@ -12,10 +12,10 @@ typedef WidgetBuilderAsync = Widget Function(
   Widget? loader,
 );
 
-/// Nó da árvore de rotas: uma página ([GetItPageRouter]) ou um agrupamento
-/// de páginas/sub-módulos ([GetItModuleRouter]).
-sealed class GetItRouter {
-  const GetItRouter({
+/// Nó da árvore de rotas: uma página ([MGetItPageRouter]) ou um agrupamento
+/// de páginas/sub-módulos ([MGetItModuleRouter]).
+sealed class MGetItRouter {
+  const MGetItRouter({
     required this.name,
     this.bindings = const [],
     this.middlewares = const [],
@@ -27,21 +27,21 @@ sealed class GetItRouter {
   /// Binds com o mesmo ciclo de vida deste nó.
   final List<Bind> bindings;
 
-  final List<GetItMiddleware> middlewares;
+  final List<MGetItMiddleware> middlewares;
 }
 
 /// Uma página. Seus [bindings] são registrados ao abrir a rota e removidos
 /// (com dispose) ao sair dela.
 ///
 /// ```dart
-/// GetItPageRouter(
+/// MGetItPageRouter(
 ///   name: '/Page',
 ///   bindings: [Bind.lazySingleton((i) => HomeController())],
 ///   builder: (context) => HomePage(controller: context.get()),
 /// )
 /// ```
-class GetItPageRouter extends GetItRouter {
-  const GetItPageRouter({
+class MGetItPageRouter extends MGetItRouter {
+  const MGetItPageRouter({
     required super.name,
     this.builder,
     this.builderAsync,
@@ -68,8 +68,8 @@ class GetItPageRouter extends GetItRouter {
 /// Agrupa páginas e sub-módulos. Seus [bindings] vivem enquanto qualquer
 /// página da sub-árvore estiver aberta; [onInit]/[onDispose] marcam a
 /// entrada e a saída do grupo.
-class GetItModuleRouter extends GetItRouter {
-  const GetItModuleRouter({
+class MGetItModuleRouter extends MGetItRouter {
+  const MGetItModuleRouter({
     required super.name,
     required this.pages,
     super.bindings,
@@ -78,7 +78,7 @@ class GetItModuleRouter extends GetItRouter {
     this.onDispose,
   });
 
-  final List<GetItRouter> pages;
+  final List<MGetItRouter> pages;
   final void Function(Injector i)? onInit;
   final void Function(Injector i)? onDispose;
 }
@@ -87,7 +87,7 @@ class GetItModuleRouter extends GetItRouter {
 /// compartilhados entre elas.
 ///
 /// ```dart
-/// class AuthModule extends GetItModule {
+/// class AuthModule extends MGetItModule {
 ///   @override
 ///   String get moduleRouteName => '/Auth';
 ///
@@ -95,21 +95,21 @@ class GetItModuleRouter extends GetItRouter {
 ///   List<Bind> get bindings => [Bind.lazySingleton((i) => AuthRepository())];
 ///
 ///   @override
-///   List<GetItRouter> get pages => [
-///     GetItPageRouter(name: '/Login', builder: (_) => const LoginPage()),
+///   List<MGetItRouter> get pages => [
+///     MGetItPageRouter(name: '/Login', builder: (_) => const LoginPage()),
 ///   ];
 /// }
 /// ```
-abstract class GetItModule {
+abstract class MGetItModule {
   /// Prefixo de todas as rotas do módulo.
   String get moduleRouteName;
 
   /// Binds compartilhados por todas as rotas do módulo.
   List<Bind> get bindings => const [];
 
-  List<GetItRouter> get pages;
+  List<MGetItRouter> get pages;
 
-  List<GetItMiddleware> get middlewares => const [];
+  List<MGetItMiddleware> get middlewares => const [];
 
   /// Chamado na primeira entrada em qualquer rota do módulo.
   void onInit(Injector i) {}

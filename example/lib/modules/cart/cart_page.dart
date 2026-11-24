@@ -4,7 +4,7 @@ import 'package:getit_modular/getit_modular.dart';
 import '../products/price_label.dart';
 import 'cart_controller.dart';
 
-class CartPage extends GetItView<CartController> {
+class CartPage extends MGetItView<CartController> {
   const CartPage({super.key});
 
   @override
@@ -23,7 +23,8 @@ class CartPage extends GetItView<CartController> {
               for (final MapEntry(key: product, value: quantity)
                   in cart.items.entries)
                 ListTile(
-                  leading: Text(product.emoji, style: const TextStyle(fontSize: 28)),
+                  leading:
+                      Text(product.emoji, style: const TextStyle(fontSize: 28)),
                   title: Text(product.name),
                   subtitle: Text(
                     '$quantity × ${context.get<PriceLabel>(param1: product.price).text}',

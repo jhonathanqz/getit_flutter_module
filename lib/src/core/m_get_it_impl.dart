@@ -1,5 +1,5 @@
 // ignore_for_file: avoid_print
-part of 'get_it.dart';
+part of 'm_get_it.dart';
 
 const _baseScopeName = 'baseScope';
 
@@ -13,7 +13,7 @@ bool get _isDebugMode {
 }
 
 void _debugOutput(Object message) {
-  if (!GetIt.noDebugOutput && _isDebugMode) {
+  if (!MGetIt.noDebugOutput && _isDebugMode) {
     print(message);
   }
 }
@@ -29,7 +29,7 @@ void _throwIfNot(bool condition, Object error) {
 class _ObjectRegistration<T extends Object, P1, P2>
     implements ObjectRegistration<T> {
   _ObjectRegistration(
-    this._getIt,
+    this._mGetIt,
     this.registrationType, {
     required this.scope,
     this.instanceName,
@@ -49,7 +49,7 @@ class _ObjectRegistration<T extends Object, P1, P2>
     }
   }
 
-  final _GetItImplementation _getIt;
+  final _MGetItImplementation _mGetIt;
   final _Scope scope;
 
   @override
@@ -128,7 +128,7 @@ class _ObjectRegistration<T extends Object, P1, P2>
   }
 
   void _notifyShadowed(T newInstance) {
-    final shadowed = _getIt._findLowerRegistration(this)?.instance;
+    final shadowed = _mGetIt._findLowerRegistration(this)?.instance;
     if (shadowed is ShadowChangeHandlers) {
       shadowed.onGetShadowed(newInstance);
     }
@@ -137,7 +137,7 @@ class _ObjectRegistration<T extends Object, P1, P2>
   void _notifyLeaveShadow() {
     final current = instance;
     if (current == null) return;
-    final shadowed = _getIt._findLowerRegistration(this)?.instance;
+    final shadowed = _mGetIt._findLowerRegistration(this)?.instance;
     if (shadowed is ShadowChangeHandlers) {
       shadowed.onLeaveShadow(current);
     }
@@ -147,7 +147,7 @@ class _ObjectRegistration<T extends Object, P1, P2>
     if (param1 != null || <P1?>[] is! List<P1>) {
       if (param1 is! P1) {
         throw ArgumentError(
-          "GetIt: Cannot use parameter value of type '${param1.runtimeType}' "
+          "MGetIt: Cannot use parameter value of type '${param1.runtimeType}' "
           "as type '$P1' for factory of type '$T'.",
         );
       }
@@ -155,7 +155,7 @@ class _ObjectRegistration<T extends Object, P1, P2>
     if (param2 != null || <P2?>[] is! List<P2>) {
       if (param2 is! P2) {
         throw ArgumentError(
-          "GetIt: Cannot use parameter value of type '${param2.runtimeType}' "
+          "MGetIt: Cannot use parameter value of type '${param2.runtimeType}' "
           "as type '$P2' for factory of type '$T'.",
         );
       }
@@ -163,9 +163,10 @@ class _ObjectRegistration<T extends Object, P1, P2>
   }
 
   Never _throwCircular() {
-    final named = instanceName != null ? ' (instanceName: "$instanceName")' : '';
+    final named =
+        instanceName != null ? ' (instanceName: "$instanceName")' : '';
     throw StateError(
-      'GetIt: Circular dependency detected while creating $T$named.',
+      'MGetIt: Circular dependency detected while creating $T$named.',
     );
   }
 
@@ -214,14 +215,14 @@ class _ObjectRegistration<T extends Object, P1, P2>
         registrationType == ObjectRegistrationType.alwaysNew ||
             registrationType == ObjectRegistrationType.cachedFactory,
         StateError(
-          'GetIt: $T is registered as an async factory, use getAsync<$T>() instead.',
+          'MGetIt: $T is registered as an async factory, use getAsync<$T>() instead.',
         ),
       );
       final current = instance;
       _throwIf(
         current == null || !isReady && !shouldSignalReady,
         StateError(
-          'GetIt: You tried to access an instance of $T that is not ready yet',
+          'MGetIt: You tried to access an instance of $T that is not ready yet',
         ),
       );
       return current!;
@@ -253,7 +254,7 @@ class _ObjectRegistration<T extends Object, P1, P2>
           return created;
       }
     } catch (e, s) {
-      _debugOutput('GetIt: Error while creating $T\n$e\n$s');
+      _debugOutput('MGetIt: Error while creating $T\n$e\n$s');
       rethrow;
     }
   }
@@ -322,7 +323,8 @@ class _ObjectRegistration<T extends Object, P1, P2>
   /// Usado pelo `unregister`, permitindo receber a função de dispose sem tipo.
   FutureOr<void> disposeWithDynamic(Function? overrideDispose) {
     if (overrideDispose == null) return dispose();
-    return dispose(overrideDispose: (T value) => Function.apply(overrideDispose, [value]));
+    return dispose(
+        overrideDispose: (T value) => Function.apply(overrideDispose, [value]));
   }
 
   void resetInstance() {
@@ -411,8 +413,8 @@ class _Scope {
   }
 }
 
-class _GetItImplementation implements GetIt {
-  _GetItImplementation() {
+class _MGetItImplementation implements MGetIt {
+  _MGetItImplementation() {
     _scopes.add(_Scope(name: _baseScopeName));
   }
 
@@ -445,7 +447,7 @@ class _GetItImplementation implements GetIt {
 
   void _postEvent(String kind, Map<String, Object?> data) {
     if (debugEventsEnabled) {
-      developer.postEvent('ext.get_it.$kind', data);
+      developer.postEvent('ext.m_get_it.$kind', data);
     }
   }
 
@@ -459,7 +461,8 @@ class _GetItImplementation implements GetIt {
     int? startScopeIndex,
   }) {
     for (var i = startScopeIndex ?? _scopes.length - 1; i >= 0; i--) {
-      final registration = _scopes[i].typeRegistrations[type]?.find(instanceName);
+      final registration =
+          _scopes[i].typeRegistrations[type]?.find(instanceName);
       if (registration != null) return registration;
     }
     return null;
@@ -475,7 +478,8 @@ class _GetItImplementation implements GetIt {
   }
 
   /// Encontra o registro de mesmo tipo/nome no escopo abaixo de [registration].
-  _ObjectRegistration? _findLowerRegistration(_ObjectRegistration registration) {
+  _ObjectRegistration? _findLowerRegistration(
+      _ObjectRegistration registration) {
     final scopeIndex = _scopes.indexOf(registration.scope);
     if (scopeIndex <= 0) return null;
     return _findRegistrationOrNull(
@@ -499,9 +503,9 @@ class _GetItImplementation implements GetIt {
           : 'Object/factory with ${instanceName != null ? 'name $instanceName and ' : ''}'
               'type ${type ?? T}';
       throw StateError(
-        'GetIt: $lookup is not registered inside GetIt.\n'
-        '(Did you accidentally do GetIt sl=GetIt.instance(); instead of '
-        'GetIt sl=GetIt.instance;\nDid you forget to register it?)',
+        'MGetIt: $lookup is not registered inside MGetIt.\n'
+        '(Did you accidentally do MGetIt sl=MGetIt.instance(); instead of '
+        'MGetIt sl=MGetIt.instance;\nDid you forget to register it?)',
       );
     }
     return registration;
@@ -572,7 +576,7 @@ class _GetItImplementation implements GetIt {
       final scope = _scopes.where((s) => s.name == onlyInScope).firstOrNull;
       _throwIf(
         scope == null,
-        StateError('GetIt: Scope with name $onlyInScope does not exist'),
+        StateError('MGetIt: Scope with name $onlyInScope does not exist'),
       );
       result.addAll(scope!.typeRegistrations[T]?.all ?? const []);
     } else if (fromAllScopes) {
@@ -590,7 +594,8 @@ class _GetItImplementation implements GetIt {
     }
     _throwIf(
       result.isEmpty,
-      StateError('GetIt: No Objects/factories with type $T are registered inside GetIt.'),
+      StateError(
+          'MGetIt: No Objects/factories with type $T are registered inside MGetIt.'),
     );
     return result;
   }
@@ -639,7 +644,7 @@ class _GetItImplementation implements GetIt {
       scopes = _scopes.where((s) => s.name == onlyInScope);
       _throwIf(
         scopes.isEmpty,
-        StateError('GetIt: Scope with name $onlyInScope does not exist'),
+        StateError('MGetIt: Scope with name $onlyInScope does not exist'),
       );
     } else if (inAllScopes) {
       scopes = _scopes.reversed;
@@ -673,7 +678,9 @@ class _GetItImplementation implements GetIt {
         if (!typeMatches || registration.isAsync) continue;
         switch (registration.registrationType) {
           case ObjectRegistrationType.lazy:
-            if (instantiateLazySingletons) add(registration.getObject(null, null));
+            if (instantiateLazySingletons) {
+              add(registration.getObject(null, null));
+            }
           case ObjectRegistrationType.alwaysNew:
           case ObjectRegistrationType.cachedFactory:
             if (callFactories && !registration.acceptsParams) {
@@ -825,7 +832,7 @@ class _GetItImplementation implements GetIt {
         existing.registrationType != ObjectRegistrationType.constant ||
             existing.isAsync,
         StateError(
-          'GetIt: registerSingletonIfAbsent found an existing registration of '
+          'MGetIt: registerSingletonIfAbsent found an existing registration of '
           '$T that is not a (sync) singleton.',
         ),
       );
@@ -935,7 +942,7 @@ class _GetItImplementation implements GetIt {
     _throwIf(
       scope.isFinal,
       StateError(
-        'GetIt: The scope has already been finalized, you cannot register '
+        'MGetIt: The scope has already been finalized, you cannot register '
         'objects in it.',
       ),
     );
@@ -960,8 +967,8 @@ class _GetItImplementation implements GetIt {
     _throwIf(
       T == Object,
       ArgumentError(
-        'GetIt: You have to provide type. Did you accidentally do '
-        '`var sl=GetIt.instance();` instead of `var sl=GetIt.instance;`',
+        'MGetIt: You have to provide type. Did you accidentally do '
+        '`var sl=MGetIt.instance();` instead of `var sl=MGetIt.instance;`',
       ),
     );
 
@@ -969,14 +976,15 @@ class _GetItImplementation implements GetIt {
     final existingTypeRegistration = scope.typeRegistrations[T];
 
     if (instanceName != null) {
-      final existing = existingTypeRegistration?.namedRegistrations[instanceName];
+      final existing =
+          existingTypeRegistration?.namedRegistrations[instanceName];
       if (existing != null) {
         if (skipDoubleRegistration && !allowReassignment) return;
         _throwIfNot(
           allowReassignment,
           ArgumentError(
-            'GetIt: Object/factory with name $instanceName and type $T is '
-            'already registered inside GetIt.',
+            'MGetIt: Object/factory with name $instanceName and type $T is '
+            'already registered inside MGetIt.',
           ),
         );
         scope.remove(T, existing);
@@ -987,7 +995,7 @@ class _GetItImplementation implements GetIt {
         if (skipDoubleRegistration && !allowReassignment) return;
         _throwIfNot(
           allowReassignment,
-          ArgumentError('GetIt: Type $T is already registered inside GetIt.'),
+          ArgumentError('MGetIt: Type $T is already registered inside MGetIt.'),
         );
         for (final old in existingTypeRegistration.registrations.toList()) {
           scope.remove(T, old);
@@ -1044,13 +1052,13 @@ class _GetItImplementation implements GetIt {
         _throwIf(
           dependencyRegistration == null,
           ArgumentError(
-            'GetIt: Dependent Type $dependency is not registered in GetIt',
+            'MGetIt: Dependent Type $dependency is not registered in MGetIt',
           ),
         );
         _throwIfNot(
           dependencyRegistration!.canBeWaitedFor,
           ArgumentError(
-            'GetIt: Dependent Type $dependency is not an async Singleton',
+            'MGetIt: Dependent Type $dependency is not an async Singleton',
           ),
         );
         dependencyRegistration.objectsWaiting.add(T);
@@ -1078,7 +1086,7 @@ class _GetItImplementation implements GetIt {
     registration.pendingResult!.then<void>(
       (_) {},
       onError: (Object error, StackTrace stackTrace) {
-        _debugOutput('GetIt: Error while creating $T: $error');
+        _debugOutput('MGetIt: Error while creating $T: $error');
         if (!registration.readyCompleter.isCompleted) {
           registration.readyCompleter.completeError(error, stackTrace);
           registration.readyCompleter.future.ignore();
@@ -1126,7 +1134,7 @@ class _GetItImplementation implements GetIt {
               .containsKey(newInstanceName) ??
           false,
       StateError(
-        'GetIt: There is already an instance of type $type registered with '
+        'MGetIt: There is already an instance of type $type registered with '
         'the name $newInstanceName',
       ),
     );
@@ -1149,8 +1157,8 @@ class _GetItImplementation implements GetIt {
     if (registration == null) {
       if (skipUnregisterIfNotRegistered) return null;
       throw ArgumentError(
-        'GetIt: No object with name $instanceName and type $T is registered '
-        'inside GetIt.',
+        'MGetIt: No object with name $instanceName and type $T is registered '
+        'inside MGetIt.',
       );
     }
 
@@ -1162,7 +1170,7 @@ class _GetItImplementation implements GetIt {
     _throwIf(
       registration.objectsWaiting.isNotEmpty,
       StateError(
-        'GetIt: There are still other objects waiting for this instance so '
+        'MGetIt: There are still other objects waiting for this instance so '
         'signal ready: ${registration.objectsWaiting}',
       ),
     );
@@ -1191,7 +1199,7 @@ class _GetItImplementation implements GetIt {
         _findRegistration<T>(instance: instance, instanceName: instanceName);
     _throwIfNot(
       registration.registrationType == ObjectRegistrationType.lazy,
-      StateError('GetIt: There is no lazy singleton of type $T registered.'),
+      StateError('MGetIt: There is no lazy singleton of type $T registered.'),
     );
     final result = registration.disposeWithDynamic(disposingFunction);
     if (result is Future) {
@@ -1212,7 +1220,7 @@ class _GetItImplementation implements GetIt {
       scopes = _scopes.where((s) => s.name == onlyInScope);
       _throwIf(
         scopes.isEmpty,
-        StateError('GetIt: Scope with name $onlyInScope does not exist'),
+        StateError('MGetIt: Scope with name $onlyInScope does not exist'),
       );
     } else if (inAllScopes) {
       scopes = _scopes.reversed;
@@ -1237,7 +1245,7 @@ class _GetItImplementation implements GetIt {
     final registration = _findRegistration<T>(instanceName: instanceName);
     _throwIfNot(
       registration.registrationType == ObjectRegistrationType.lazy,
-      StateError('GetIt: $T is not a lazy singleton.'),
+      StateError('MGetIt: $T is not a lazy singleton.'),
     );
     return registration.instance != null;
   }
@@ -1266,17 +1274,17 @@ class _GetItImplementation implements GetIt {
   void _checkScopeName(String? scopeName) {
     _throwIf(
       scopeName != null && hasScope(scopeName),
-      ArgumentError('GetIt: You already have used the scope name $scopeName'),
+      ArgumentError('MGetIt: You already have used the scope name $scopeName'),
     );
     _throwIf(
       _currentScope.isPopping,
-      StateError('GetIt: You cannot push a new scope while popping one.'),
+      StateError('MGetIt: You cannot push a new scope while popping one.'),
     );
   }
 
   @override
   void pushNewScope({
-    void Function(GetIt getIt)? init,
+    void Function(MGetIt mGetIt)? init,
     String? scopeName,
     ScopeDisposeFunc? dispose,
     bool isFinal = false,
@@ -1297,13 +1305,14 @@ class _GetItImplementation implements GetIt {
 
   @override
   Future<void> pushNewScopeAsync({
-    Future<void> Function(GetIt getIt)? init,
+    Future<void> Function(MGetIt mGetIt)? init,
     String? scopeName,
     ScopeDisposeFunc? dispose,
   }) async {
     _checkScopeName(scopeName);
     _scopes.add(
-      _Scope(name: scopeName ?? 'scope_${_scopes.length}', disposeFunc: dispose),
+      _Scope(
+          name: scopeName ?? 'scope_${_scopes.length}', disposeFunc: dispose),
     );
     await init?.call(this);
     onScopeChanged?.call(true);
@@ -1319,7 +1328,8 @@ class _GetItImplementation implements GetIt {
   Future<void> popScope() async {
     _throwIf(
       _scopes.length == 1,
-      StateError("GetIt: You are already on the base scope. you can't pop this one"),
+      StateError(
+          "MGetIt: You are already on the base scope. you can't pop this one"),
     );
     final scope = _currentScope;
     await _disposeScope(scope);
@@ -1331,7 +1341,7 @@ class _GetItImplementation implements GetIt {
   Future<bool> popScopesTill(String name, {bool inclusive = true}) async {
     _throwIf(
       name == _baseScopeName && inclusive,
-      StateError("GetIt: You can't pop the base scope"),
+      StateError("MGetIt: You can't pop the base scope"),
     );
     if (!hasScope(name)) return false;
     String? popped;
@@ -1348,12 +1358,12 @@ class _GetItImplementation implements GetIt {
     if (currentScopeName == scopeName) return popScope();
     _throwIf(
       scopeName == _baseScopeName,
-      StateError("GetIt: You can't drop the base scope"),
+      StateError("MGetIt: You can't drop the base scope"),
     );
     final scope = _scopes.where((s) => s.name == scopeName).firstOrNull;
     _throwIf(
       scope == null,
-      ArgumentError('GetIt: Scope $scopeName not found'),
+      ArgumentError('MGetIt: Scope $scopeName not found'),
     );
     await _disposeScope(scope!);
     _scopes.remove(scope);
@@ -1417,7 +1427,7 @@ class _GetItImplementation implements GetIt {
     _throwIfNot(
       registration.canBeWaitedFor,
       ArgumentError(
-        'GetIt: You only can use this function on async Singletons or '
+        'MGetIt: You only can use this function on async Singletons or '
         'Singletons that have been marked with "signalsReady" or that they '
         'depend on others',
       ),
@@ -1448,7 +1458,7 @@ class _GetItImplementation implements GetIt {
     _throwIfNot(
       registration.canBeWaitedFor,
       ArgumentError(
-        'GetIt: You only can use this function on async Singletons or '
+        'MGetIt: You only can use this function on async Singletons or '
         'Singletons that have been marked with "signalsReady" or that they '
         'depend on others',
       ),
@@ -1470,7 +1480,7 @@ class _GetItImplementation implements GetIt {
       _throwIf(
         notReady.isNotEmpty,
         StateError(
-          'GetIt: Registered types/names $notReady should signal ready but '
+          'MGetIt: Registered types/names $notReady should signal ready but '
           'are not ready',
         ),
       );
@@ -1480,20 +1490,20 @@ class _GetItImplementation implements GetIt {
     _throwIf(
       registration == null,
       ArgumentError(
-        'GetIt: This instance of type ${instance.runtimeType} is not available in GetIt',
+        'MGetIt: This instance of type ${instance.runtimeType} is not available in MGetIt',
       ),
     );
     _throwIfNot(
       registration!.shouldSignalReady,
       ArgumentError(
-        'GetIt: This instance of type ${instance.runtimeType} is not supposed '
+        'MGetIt: This instance of type ${instance.runtimeType} is not supposed '
         'to signal ready.',
       ),
     );
     _throwIf(
       registration.isReady,
       StateError(
-        'GetIt: This instance of type ${instance.runtimeType} was already '
+        'MGetIt: This instance of type ${instance.runtimeType} was already '
         'signalled',
       ),
     );

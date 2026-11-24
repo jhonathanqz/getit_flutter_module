@@ -4,7 +4,7 @@ import 'package:getit_modular/getit_modular.dart';
 import '../../home/price_text.dart';
 import 'product_detail_controller.dart';
 
-class ProductDetailPage extends GetItView<ProductDetailController> {
+class ProductDetailPage extends MGetItView<ProductDetailController> {
   const ProductDetailPage({super.key});
 
   @override

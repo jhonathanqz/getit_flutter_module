@@ -4,7 +4,7 @@ import 'package:getit_modular/getit_modular.dart';
 import '../../../core/services/app_config.dart';
 import 'login_controller.dart';
 
-class LoginPage extends GetItView<LoginController> {
+class LoginPage extends MGetItView<LoginController> {
   const LoginPage({super.key});
 
   @override
@@ -69,8 +69,8 @@ class LoginPage extends GetItView<LoginController> {
                         ? null
                         : () async {
                             if (await controller.login() && context.mounted) {
-                              Navigator.of(context)
-                                  .pushNamedAndRemoveUntil('/Home', (_) => false);
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  '/Home', (_) => false);
                             }
                           },
                     child: controller.loading

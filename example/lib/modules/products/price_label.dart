@@ -5,5 +5,6 @@ class PriceLabel {
   final double value;
   final String currency;
 
-  String get text => '$currency ${value.toStringAsFixed(2).replaceAll('.', ',')}';
+  String get text =>
+      '$currency ${value.toStringAsFixed(2).replaceAll('.', ',')}';
 }

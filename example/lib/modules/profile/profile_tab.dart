@@ -9,9 +9,11 @@ class ProfileTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetItModularWidget(
+    return MGetItModularWidget(
       name: 'profile',
-      binds: [Bind.lazySingleton<ProfileController>((i) => ProfileController(i()))],
+      binds: [
+        Bind.lazySingleton<ProfileController>((i) => ProfileController(i()))
+      ],
       builder: (context) {
         final controller = context.get<ProfileController>();
         final config = context.get<AppConfig>();

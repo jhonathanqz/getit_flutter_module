@@ -1,9 +1,9 @@
-/// Injeção de dependências (API compatível com get_it) com estrutura
+/// Injeção de dependências (service locator MGetIt) com estrutura
 /// modular: dependências registradas ao entrar na rota/módulo e descartadas
 /// automaticamente ao sair.
 library;
 
-export 'src/core/get_it.dart';
+export 'src/core/m_get_it.dart';
 export 'src/modular/bind.dart';
 export 'src/modular/injector.dart';
 export 'src/modular/lifecycle.dart';

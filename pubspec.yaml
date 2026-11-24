@@ -1,6 +1,6 @@
 name: getit_modular
 description: >-
-  Dependency injection for Flutter with a get_it-compatible service locator
+  Dependency injection for Flutter with its own service locator (MGetIt)
   and modules that register on route entry and auto-dispose on exit.
 version: 0.1.0
 repository: https://github.com/jhonathanqz/getit_modular
@@ -10,7 +10,6 @@ topics:
   - dependency-injection
   - service-locator
   - modular
-  - get-it
   - routing
 
 screenshots:

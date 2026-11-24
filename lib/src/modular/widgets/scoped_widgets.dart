@@ -7,8 +7,8 @@ import 'modular_page.dart';
 
 /// Registra [binds] enquanto o widget estiver montado (componente com
 /// dependências próprias, ex.: um card com seu controller).
-class GetItModularWidget extends StatefulWidget {
-  const GetItModularWidget({
+class MGetItModularWidget extends StatefulWidget {
+  const MGetItModularWidget({
     super.key,
     required this.builder,
     this.binds = const [],
@@ -26,10 +26,10 @@ class GetItModularWidget extends StatefulWidget {
   final void Function(Injector i)? onDispose;
 
   @override
-  State<GetItModularWidget> createState() => _GetItModularWidgetState();
+  State<MGetItModularWidget> createState() => _MGetItModularWidgetState();
 }
 
-class _GetItModularWidgetState extends State<GetItModularWidget> {
+class _MGetItModularWidgetState extends State<MGetItModularWidget> {
   late final ModularContainer _container;
   late final String _id;
 
@@ -58,8 +58,8 @@ class _GetItModularWidgetState extends State<GetItModularWidget> {
 
 /// Navigator aninhado que resolve as rotas modulares (ex.: abas com
 /// navegação própria).
-class GetItRouteOutlet extends StatelessWidget {
-  const GetItRouteOutlet({
+class MGetItRouteOutlet extends StatelessWidget {
+  const MGetItRouteOutlet({
     super.key,
     required this.initialRoute,
     this.navigatorKey,
@@ -100,14 +100,14 @@ class GetItRouteOutlet extends StatelessWidget {
 /// Widget sem estado com acesso tipado a uma dependência.
 ///
 /// ```dart
-/// class HomePage extends GetItView<HomeController> {
+/// class HomePage extends MGetItView<HomeController> {
 ///   const HomePage({super.key});
 ///   @override
 ///   Widget build(BuildContext context) => Text(controller.title);
 /// }
 /// ```
-abstract class GetItView<T extends Object> extends StatelessWidget {
-  const GetItView({super.key});
+abstract class MGetItView<T extends Object> extends StatelessWidget {
+  const MGetItView({super.key});
 
   T get controller => Injector.I.get<T>();
 }

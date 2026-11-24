@@ -7,7 +7,7 @@ enum MiddlewareResult {
   /// Segue para o próximo middleware.
   next,
 
-  /// Interrompe a abertura da rota e chama [GetItMiddleware.onFail].
+  /// Interrompe a abertura da rota e chama [MGetItMiddleware.onFail].
   failure,
 
   /// Encerra a cadeia com sucesso (os próximos middlewares não rodam).
@@ -16,8 +16,8 @@ enum MiddlewareResult {
 
 /// Base dos middlewares: executados quando uma rota modular é aberta,
 /// antes de a página ser considerada "pronta".
-sealed class GetItMiddleware {
-  const GetItMiddleware();
+sealed class MGetItMiddleware {
+  const MGetItMiddleware();
 
   /// Permite pular o middleware para determinadas rotas.
   bool executeWhen(RouteSettings? route) => true;
@@ -34,16 +34,16 @@ sealed class GetItMiddleware {
 }
 
 /// Middleware síncrono (ex.: verificação de permissão em memória).
-abstract class GetItSyncMiddleware extends GetItMiddleware {
-  const GetItSyncMiddleware();
+abstract class MGetItSyncMiddleware extends MGetItMiddleware {
+  const MGetItSyncMiddleware();
 
   MiddlewareResult execute(RouteSettings? route);
 }
 
 /// Middleware assíncrono (ex.: validar token na API). Enquanto executa, o
 /// [loader] é entregue ao `builderAsync` da página.
-abstract class GetItAsyncMiddleware extends GetItMiddleware {
-  const GetItAsyncMiddleware();
+abstract class MGetItAsyncMiddleware extends MGetItMiddleware {
+  const MGetItAsyncMiddleware();
 
   Future<MiddlewareResult> execute(RouteSettings? route);
 

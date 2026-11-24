@@ -16,7 +16,7 @@ class ScopeSpec {
 
   final String id;
   final List<Bind> bindings;
-  final List<GetItMiddleware> middlewares;
+  final List<MGetItMiddleware> middlewares;
   final void Function(Injector i)? onInit;
   final void Function(Injector i)? onDispose;
 
@@ -34,7 +34,7 @@ class ResolvedRoute {
 
   final String path;
   final List<ScopeSpec> scopes;
-  final GetItPageRouter page;
+  final MGetItPageRouter page;
 }
 
 /// Achata módulos e rotas aninhadas em um mapa `caminho -> rota`.
@@ -45,14 +45,16 @@ abstract final class RouteResolver {
       return prefix.isEmpty ? '/' : prefix;
     }
     if (!segment.startsWith('/')) segment = '/$segment';
-    if (segment.endsWith('/')) segment = segment.substring(0, segment.length - 1);
+    if (segment.endsWith('/')) {
+      segment = segment.substring(0, segment.length - 1);
+    }
     final base = prefix == '/' ? '' : prefix;
     return '$base$segment';
   }
 
   static Map<String, ResolvedRoute> resolve({
-    List<GetItModule> modules = const [],
-    List<GetItRouter> pages = const [],
+    List<MGetItModule> modules = const [],
+    List<MGetItRouter> pages = const [],
   }) {
     final result = <String, ResolvedRoute>{};
 
@@ -63,10 +65,10 @@ abstract final class RouteResolver {
       result[route.path] = route;
     }
 
-    void walk(GetItRouter node, String prefix, List<ScopeSpec> chain) {
+    void walk(MGetItRouter node, String prefix, List<ScopeSpec> chain) {
       final path = join(prefix, node.name);
       switch (node) {
-        case GetItPageRouter():
+        case MGetItPageRouter():
           add(ResolvedRoute(
             path: path,
             page: node,
@@ -79,7 +81,7 @@ abstract final class RouteResolver {
               ),
             ],
           ));
-        case GetItModuleRouter():
+        case MGetItModuleRouter():
           final scope = ScopeSpec(
             id: 'module:$path',
             bindings: node.bindings,

@@ -3,7 +3,7 @@ import 'package:getit_modular/getit_modular.dart';
 
 import 'register_controller.dart';
 
-class RegisterNamePage extends GetItView<RegisterController> {
+class RegisterNamePage extends MGetItView<RegisterController> {
   const RegisterNamePage({super.key});
 
   @override
@@ -31,8 +31,8 @@ class RegisterNamePage extends GetItView<RegisterController> {
             builder: (context, _) => FilledButton(
               key: const Key('register-next'),
               onPressed: controller.stepOneValid
-                  ? () => Navigator.of(context)
-                      .pushNamed('/Auth/Register/Password')
+                  ? () =>
+                      Navigator.of(context).pushNamed('/Auth/Register/Password')
                   : null,
               child: const Text('Continuar'),
             ),

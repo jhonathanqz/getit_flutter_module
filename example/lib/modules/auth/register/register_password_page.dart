@@ -3,7 +3,7 @@ import 'package:getit_modular/getit_modular.dart';
 
 import 'register_controller.dart';
 
-class RegisterPasswordPage extends GetItView<RegisterController> {
+class RegisterPasswordPage extends MGetItView<RegisterController> {
   const RegisterPasswordPage({super.key});
 
   @override

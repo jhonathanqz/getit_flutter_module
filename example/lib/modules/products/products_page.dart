@@ -6,7 +6,7 @@ import '../home/price_text.dart';
 import 'products_controller.dart';
 import 'recently_viewed.dart';
 
-class ProductsPage extends GetItView<ProductsController> {
+class ProductsPage extends MGetItView<ProductsController> {
   const ProductsPage({super.key});
 
   @override
@@ -28,7 +28,8 @@ class ProductsPage extends GetItView<ProductsController> {
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         const Text('Vistos recentemente:'),
-                        for (final p in recent.items) Chip(label: Text(p.emoji)),
+                        for (final p in recent.items)
+                          Chip(label: Text(p.emoji)),
                       ],
                     ),
                   ),
@@ -36,7 +37,8 @@ class ProductsPage extends GetItView<ProductsController> {
           for (final product in controller.products)
             ListTile(
               key: Key('product-${product.id}'),
-              leading: Text(product.emoji, style: const TextStyle(fontSize: 32)),
+              leading:
+                  Text(product.emoji, style: const TextStyle(fontSize: 32)),
               title: Text(product.name),
               subtitle: PriceText(product.price),
               trailing: const Icon(Icons.chevron_right),

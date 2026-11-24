@@ -23,7 +23,7 @@ application                      FakeApi, SessionStore, AppConfig (async → spl
 │       ├── /Auth/Register
 │       └── /Auth/Register/Password
 ├── /Home            [AuthGuard] CartController, PriceLabel (factoryParam)
-│   └── /Home                    abas: Produtos (GetItRouteOutlet) | Carrinho | Perfil (GetItModularWidget)
+│   └── /Home                    abas: Produtos (MGetItRouteOutlet) | Carrinho | Perfil (MGetItModularWidget)
 └── /Products        [CatalogPermissionMiddleware async]
     │                            ProductsRepository, RecentlyViewed (keepAlive)
     ├── /Products                ProductsController (singletonAsync + builderAsync)
@@ -41,12 +41,12 @@ application                      FakeApi, SessionStore, AppConfig (async → spl
 
 ```
 lib/
-├── app/            GetItModular, AppBindings, splash
+├── app/            MGetItModular, AppBindings, splash
 ├── core/           serviços (API fake, sessão, config), middlewares, inspector
 └── modules/
     ├── auth/       login + sub-módulo de cadastro
     ├── home/       shell com abas + AuthGuard
     ├── products/   catálogo, detalhe, middleware async, keepAlive
     ├── cart/       carrinho (bind do módulo Home)
-    └── profile/    aba com GetItModularWidget
+    └── profile/    aba com MGetItModularWidget
 ```

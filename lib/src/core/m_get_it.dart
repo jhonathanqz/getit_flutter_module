@@ -1,5 +1,5 @@
-// Reimplementação do service locator `get_it` (https://github.com/flutter-it/get_it)
-// mantendo a mesma API pública, para servir de motor da camada modular.
+// Service locator MGetIt: motor de registro e resolução usado pela camada
+// modular.
 //
 // ignore_for_file: avoid_print
 library;
@@ -10,17 +10,17 @@ import 'dart:developer' as developer;
 
 import 'package:meta/meta.dart';
 
-part 'get_it_impl.dart';
+part 'm_get_it_impl.dart';
 
-/// Tipo de registro de um objeto/factory dentro do [GetIt].
+/// Tipo de registro de um objeto/factory dentro do [MGetIt].
 enum ObjectRegistrationType {
-  /// Factory: um novo objeto a cada chamada de [GetIt.get].
+  /// Factory: um novo objeto a cada chamada de [MGetIt.get].
   alwaysNew,
 
   /// Singleton comum (instância já criada ou criada assincronamente).
   constant,
 
-  /// Lazy singleton: criado na primeira chamada de [GetIt.get].
+  /// Lazy singleton: criado na primeira chamada de [MGetIt.get].
   lazy,
 
   /// Factory com cache: reutiliza a instância enquanto ela estiver viva
@@ -29,7 +29,7 @@ enum ObjectRegistrationType {
 }
 
 /// Se uma classe implementar esta interface, ela precisa chamar
-/// [GetIt.signalReady] para sinalizar que está pronta.
+/// [MGetIt.signalReady] para sinalizar que está pronta.
 abstract class WillSignalReady {}
 
 /// Implemente esta interface para ser notificado quando o objeto for
@@ -40,7 +40,7 @@ abstract mixin class ShadowChangeHandlers {
 }
 
 /// Objetos que implementam [Disposable] têm [onDispose] chamado
-/// automaticamente ao serem removidos do [GetIt] (quando nenhuma função
+/// automaticamente ao serem removidos do [MGetIt] (quando nenhuma função
 /// de dispose foi informada no registro).
 abstract mixin class Disposable {
   FutureOr onDispose();
@@ -67,7 +67,7 @@ class InitDependency implements Type {
   String toString() => 'InitDependency(type:$type, instanceName:$instanceName)';
 }
 
-/// Lançada por [GetIt.allReady]/[GetIt.isReady] quando o `timeout` estoura.
+/// Lançada por [MGetIt.allReady]/[MGetIt.isReady] quando o `timeout` estoura.
 class WaitingTimeOutException implements Exception {
   /// Para cada tipo ainda não pronto, quem está esperando por ele.
   final Map<String, List<String>> areWaitedBy;
@@ -79,7 +79,7 @@ class WaitingTimeOutException implements Exception {
   @override
   String toString() {
     final buffer = StringBuffer(
-      'GetIt: There was a timeout while waiting for an instance to signal ready\n',
+      'MGetIt: There was a timeout while waiting for an instance to signal ready\n',
     );
     buffer.writeln('The following instance types where waiting for completion');
     for (final entry in areWaitedBy.entries) {
@@ -107,20 +107,20 @@ abstract class ObjectRegistration<T extends Object> {
   bool get canBeWaitedFor;
 }
 
-/// Service locator. Use [GetIt.instance] / [GetIt.I] para a instância global
-/// ou [GetIt.asNewInstance] para instâncias isoladas (ex.: testes).
-abstract class GetIt {
-  static final GetIt _instance = _GetItImplementation();
+/// Service locator. Use [MGetIt.instance] / [MGetIt.I] para a instância global
+/// ou [MGetIt.asNewInstance] para instâncias isoladas (ex.: testes).
+abstract class MGetIt {
+  static final MGetIt _instance = _MGetItImplementation();
 
   /// Chamado sempre que um escopo é empilhado (`true`) ou desempilhado (`false`).
   void Function(bool pushed)? onScopeChanged;
 
-  static GetIt get instance => _instance;
+  static MGetIt get instance => _instance;
 
   // ignore: non_constant_identifier_names
-  static GetIt get I => _instance;
+  static MGetIt get I => _instance;
 
-  factory GetIt.asNewInstance() => _GetItImplementation();
+  factory MGetIt.asNewInstance() => _MGetItImplementation();
 
   /// Quando `true`, nenhuma mensagem de debug é impressa.
   static bool noDebugOutput = false;
@@ -190,7 +190,7 @@ abstract class GetIt {
     bool callFactories = false,
   });
 
-  /// Permite escrever `getIt<MyType>()` no lugar de `getIt.get<MyType>()`.
+  /// Permite escrever `mGetIt<MyType>()` no lugar de `mGetIt.get<MyType>()`.
   T call<T extends Object>({
     String? instanceName,
     dynamic param1,
@@ -312,14 +312,14 @@ abstract class GetIt {
   Future<void> resetScope({bool dispose = true});
 
   void pushNewScope({
-    void Function(GetIt getIt)? init,
+    void Function(MGetIt mGetIt)? init,
     String? scopeName,
     ScopeDisposeFunc? dispose,
     bool isFinal = false,
   });
 
   Future<void> pushNewScopeAsync({
-    Future<void> Function(GetIt getIt)? init,
+    Future<void> Function(MGetIt mGetIt)? init,
     String? scopeName,
     ScopeDisposeFunc? dispose,
   });

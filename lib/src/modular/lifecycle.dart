@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import '../core/get_it.dart';
+import '../core/m_get_it.dart';
 
 /// Mixin para classes gerenciadas pelos [Bind]s:
 ///

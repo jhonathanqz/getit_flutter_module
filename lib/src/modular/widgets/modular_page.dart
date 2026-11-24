@@ -53,15 +53,16 @@ class _ModularPageState extends State<ModularPage> {
     }
   }
 
-  List<GetItMiddleware> get _middlewares => [
+  List<MGetItMiddleware> get _middlewares => [
         ..._container.appMiddlewares,
         for (final scope in widget.route.scopes) ...scope.middlewares,
       ];
 
   bool _mustWait() {
     if (widget.route.page.builderAsync == null) return false;
-    final hasAsyncMiddleware = _middlewares.any((m) => m is GetItAsyncMiddleware);
-    return hasAsyncMiddleware || !_container.getIt.allReadySync();
+    final hasAsyncMiddleware =
+        _middlewares.any((m) => m is MGetItAsyncMiddleware);
+    return hasAsyncMiddleware || !_container.mGetIt.allReadySync();
   }
 
   Future<void> _prepare(RouteSettings? settings) async {
@@ -72,9 +73,9 @@ class _ModularPageState extends State<ModularPage> {
 
         final MiddlewareResult result;
         switch (middleware) {
-          case GetItSyncMiddleware():
+          case MGetItSyncMiddleware():
             result = middleware.execute(settings);
-          case GetItAsyncMiddleware():
+          case MGetItAsyncMiddleware():
             setState(() => _loader = middleware.loader);
             result = await middleware.execute(settings);
             if (!mounted) return;
@@ -92,7 +93,7 @@ class _ModularPageState extends State<ModularPage> {
         if (result == MiddlewareResult.complete) break;
       }
 
-      await _container.getIt.allReady();
+      await _container.mGetIt.allReady();
       if (mounted && !_ready) setState(() => _ready = true);
     } catch (error, stack) {
       FlutterError.reportError(FlutterErrorDetails(

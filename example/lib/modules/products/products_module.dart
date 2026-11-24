@@ -9,15 +9,16 @@ import 'products_page.dart';
 import 'products_repository.dart';
 import 'recently_viewed.dart';
 
-/// Rotas (abertas dentro do `GetItRouteOutlet` da Home):
+/// Rotas (abertas dentro do `MGetItRouteOutlet` da Home):
 /// * `/Products`         lista (bind assíncrono + middleware assíncrono)
 /// * `/Products/Detail`  sub-módulo com argumentos
-class ProductsModule extends GetItModule {
+class ProductsModule extends MGetItModule {
   @override
   String get moduleRouteName => '/Products';
 
   @override
-  List<GetItMiddleware> get middlewares => const [CatalogPermissionMiddleware()];
+  List<MGetItMiddleware> get middlewares =>
+      const [CatalogPermissionMiddleware()];
 
   @override
   List<Bind> get bindings => [
@@ -29,8 +30,8 @@ class ProductsModule extends GetItModule {
       ];
 
   @override
-  List<GetItRouter> get pages => [
-        GetItPageRouter(
+  List<MGetItRouter> get pages => [
+        MGetItPageRouter(
           name: '/',
           bindings: [
             Bind.singletonAsync<ProductsController>(
@@ -47,7 +48,7 @@ class ProductsModule extends GetItModule {
                       const Center(child: CircularProgressIndicator()),
                 ),
         ),
-        GetItModuleRouter(
+        MGetItModuleRouter(
           name: '/Detail',
           bindings: [
             // Lê o id enviado em `arguments` ao navegar.
@@ -61,7 +62,8 @@ class ProductsModule extends GetItModule {
             ),
           ],
           pages: [
-            GetItPageRouter(name: '/', builder: (_) => const ProductDetailPage()),
+            MGetItPageRouter(
+                name: '/', builder: (_) => const ProductDetailPage()),
           ],
         ),
       ];

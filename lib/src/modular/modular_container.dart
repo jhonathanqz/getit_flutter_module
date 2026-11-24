@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
-import '../core/get_it.dart';
+import '../core/m_get_it.dart';
 import 'bind.dart';
 import 'injector.dart';
 import 'logger.dart';
@@ -35,13 +35,13 @@ class _ScopeNode {
   int references = 1;
 }
 
-/// Bind atualmente registrado no GetIt e quantos escopos o fornecem.
+/// Bind atualmente registrado no MGetIt e quantos escopos o fornecem.
 class _ActiveBind {
   _ActiveBind(this.bind, {required this.owned});
 
   final Bind bind;
 
-  /// `false` quando o tipo já estava registrado no GetIt por fora do
+  /// `false` quando o tipo já estava registrado no MGetIt por fora do
   /// modular: nesse caso não fazemos o unregister.
   final bool owned;
   int providers = 1;
@@ -49,23 +49,23 @@ class _ActiveBind {
 }
 
 /// Controla quais escopos estão abertos e registra/remove os [Bind]s no
-/// [GetIt] com contagem de referências:
+/// [MGetIt] com contagem de referências:
 ///
 /// * ao abrir um escopo, seus binds são registrados (se ainda não estiverem);
 /// * ao fechar, os binds que nenhum outro escopo aberto fornece são removidos
 ///   e descartados (dispose automático).
 class ModularContainer extends ChangeNotifier {
-  ModularContainer(this.getIt);
+  ModularContainer(this.mGetIt);
 
   static ModularContainer? _instance;
 
-  /// Container ativo, criado pelo widget `GetItModular`.
+  /// Container ativo, criado pelo widget `MGetItModular`.
   static ModularContainer get instance {
     final container = _instance;
     if (container == null) {
       throw StateError(
-        'GetItModular não foi inicializado. Envolva seu MaterialApp com o '
-        'widget GetItModular.',
+        'MGetItModular não foi inicializado. Envolva seu MaterialApp com o '
+        'widget MGetItModular.',
       );
     }
     return container;
@@ -74,29 +74,29 @@ class ModularContainer extends ChangeNotifier {
   static ModularContainer? get maybeInstance => _instance;
 
   /// Cria e ativa o container global.
-  static ModularContainer initialize(GetIt getIt) {
+  static ModularContainer initialize(MGetIt mGetIt) {
     if (_instance != null) {
       throw StateError(
-        'Já existe um GetItModular ativo. Use apenas um na raiz do app.',
+        'Já existe um MGetItModular ativo. Use apenas um na raiz do app.',
       );
     }
-    return _instance = ModularContainer(getIt);
+    return _instance = ModularContainer(mGetIt);
   }
 
-  /// Desativa o container global (chamado no dispose do `GetItModular`).
+  /// Desativa o container global (chamado no dispose do `MGetItModular`).
   static void shutdown() {
     _instance = null;
   }
 
-  final GetIt getIt;
+  final MGetIt mGetIt;
 
-  Injector get injector => Injector(getIt);
+  Injector get injector => Injector(mGetIt);
 
   /// Argumentos da última rota modular aberta.
   Object? arguments;
 
   /// Middlewares globais (executados em todas as rotas).
-  List<GetItMiddleware> appMiddlewares = const [];
+  List<MGetItMiddleware> appMiddlewares = const [];
 
   /// Rotas resolvidas (caminho completo -> rota).
   Map<String, ResolvedRoute> routes = const {};
@@ -150,7 +150,7 @@ class ModularContainer extends ChangeNotifier {
       active.providers++;
       return;
     }
-    if (bind.isRegisteredIn(getIt)) {
+    if (bind.isRegisteredIn(mGetIt)) {
       ModularLogger.alreadyRegistered(bind);
       _binds[bind.key] = _ActiveBind(bind, owned: false);
       return;
@@ -159,7 +159,7 @@ class ModularContainer extends ChangeNotifier {
     _binds[bind.key] = activeBind;
     try {
       bind.register(
-        getIt,
+        mGetIt,
         injector: injector,
         onFactoryCreated: (instance) {
           if (instance is Disposable || bind.onDispose != null) {
@@ -176,7 +176,7 @@ class ModularContainer extends ChangeNotifier {
 
   /// Libera uma referência do escopo [id]. Quando não restam referências o
   /// escopo é fechado: [beforeDispose] é executado e os binds que não são
-  /// usados por outros escopos são removidos do GetIt.
+  /// usados por outros escopos são removidos do MGetIt.
   ///
   /// Retorna `true` quando o escopo foi fechado.
   bool close(String id, {VoidCallback? beforeDispose}) {
@@ -215,7 +215,7 @@ class ModularContainer extends ChangeNotifier {
       _guard(() => active.bind.disposeInstance(instance));
     }
     active.factoryInstances.clear();
-    _guard(() => active.bind.unregister(getIt));
+    _guard(() => active.bind.unregister(mGetIt));
     ModularLogger.disposed(active.bind);
   }
 
@@ -239,7 +239,7 @@ class ModularContainer extends ChangeNotifier {
     }
   }
 
-  /// Fecha todos os escopos (usado ao desmontar o `GetItModular`).
+  /// Fecha todos os escopos (usado ao desmontar o `MGetItModular`).
   void closeAll() {
     for (final id in _scopes.keys.toList().reversed) {
       final scope = _scopes[id]!;

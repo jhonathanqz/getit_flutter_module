@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/get_it.dart';
+import '../../core/m_get_it.dart';
 import '../bind.dart';
 import '../logger.dart';
 import '../middleware.dart';
@@ -27,7 +27,7 @@ abstract class ApplicationBindings {
 /// ciclo de vida das dependências.
 ///
 /// ```dart
-/// GetItModular(
+/// MGetItModular(
 ///   bindings: AppBindings(),
 ///   modules: [AuthModule(), HomeModule()],
 ///   builder: (context, routes, isReady) => MaterialApp(
@@ -36,30 +36,30 @@ abstract class ApplicationBindings {
 ///   ),
 /// );
 /// ```
-class GetItModular extends StatefulWidget {
-  const GetItModular({
+class MGetItModular extends StatefulWidget {
+  const MGetItModular({
     super.key,
     required this.builder,
     this.bindings,
     this.modules = const [],
     this.pages = const [],
     this.middlewares = const [],
-    this.getIt,
+    this.mGetIt,
     this.logEnabled = false,
   });
 
   final ModularAppBuilder builder;
   final ApplicationBindings? bindings;
-  final List<GetItModule> modules;
+  final List<MGetItModule> modules;
 
-  /// Rotas avulsas ([GetItPageRouter]) ou agrupadas ([GetItModuleRouter]).
-  final List<GetItRouter> pages;
+  /// Rotas avulsas ([MGetItPageRouter]) ou agrupadas ([MGetItModuleRouter]).
+  final List<MGetItRouter> pages;
 
   /// Middlewares executados em todas as rotas.
-  final List<GetItMiddleware> middlewares;
+  final List<MGetItMiddleware> middlewares;
 
-  /// Instância do [GetIt] usada. Padrão: [GetIt.I].
-  final GetIt? getIt;
+  /// Instância do [MGetIt] usada. Padrão: [MGetIt.I].
+  final MGetIt? mGetIt;
 
   final bool logEnabled;
 
@@ -76,10 +76,10 @@ class GetItModular extends StatefulWidget {
   }
 
   @override
-  State<GetItModular> createState() => _GetItModularState();
+  State<MGetItModular> createState() => _MGetItModularState();
 }
 
-class _GetItModularState extends State<GetItModular> {
+class _MGetItModularState extends State<MGetItModular> {
   late final ModularContainer _container;
   late final Map<String, WidgetBuilder> _routes;
   bool _isReady = false;
@@ -88,7 +88,7 @@ class _GetItModularState extends State<GetItModular> {
   void initState() {
     super.initState();
     ModularLogger.enabled = widget.logEnabled;
-    _container = ModularContainer.initialize(widget.getIt ?? GetIt.I)
+    _container = ModularContainer.initialize(widget.mGetIt ?? MGetIt.I)
       ..appMiddlewares = widget.middlewares
       ..routes = RouteResolver.resolve(
         modules: widget.modules,
@@ -101,13 +101,13 @@ class _GetItModularState extends State<GetItModular> {
     };
 
     _container.open(
-      GetItModular.applicationScopeId,
+      MGetItModular.applicationScopeId,
       widget.bindings?.bindings() ?? const [],
     );
 
-    _isReady = _container.getIt.allReadySync();
+    _isReady = _container.mGetIt.allReadySync();
     if (!_isReady) {
-      _container.getIt.allReady().then((_) {
+      _container.mGetIt.allReady().then((_) {
         if (mounted) setState(() => _isReady = true);
       });
     }

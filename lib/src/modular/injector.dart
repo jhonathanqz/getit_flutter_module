@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../core/get_it.dart';
+import '../core/m_get_it.dart';
 import 'modular_container.dart';
 
 /// Fachada de acesso às instâncias registradas.
@@ -8,37 +8,37 @@ import 'modular_container.dart';
 /// Dentro dos binds é recebido como parâmetro (`(i) => Repo(i())`); fora
 /// deles use [Injector.I] ou a extensão `context.get<T>()`.
 class Injector {
-  const Injector(this.getIt);
+  const Injector(this.mGetIt);
 
-  /// Injector ligado ao container modular ativo (ou ao [GetIt.I]).
+  /// Injector ligado ao container modular ativo (ou ao [MGetIt.I]).
   static Injector get I =>
-      Injector(ModularContainer.maybeInstance?.getIt ?? GetIt.I);
+      Injector(ModularContainer.maybeInstance?.mGetIt ?? MGetIt.I);
 
-  final GetIt getIt;
+  final MGetIt mGetIt;
 
   T get<T extends Object>({String? tag, dynamic param1, dynamic param2}) =>
-      getIt.get<T>(instanceName: tag, param1: param1, param2: param2);
+      mGetIt.get<T>(instanceName: tag, param1: param1, param2: param2);
 
   T? maybeGet<T extends Object>({String? tag}) =>
-      getIt.maybeGet<T>(instanceName: tag);
+      mGetIt.maybeGet<T>(instanceName: tag);
 
   Future<T> getAsync<T extends Object>({
     String? tag,
     dynamic param1,
     dynamic param2,
   }) =>
-      getIt.getAsync<T>(instanceName: tag, param1: param1, param2: param2);
+      mGetIt.getAsync<T>(instanceName: tag, param1: param1, param2: param2);
 
-  Iterable<T> getAll<T extends Object>() => getIt.getAll<T>();
+  Iterable<T> getAll<T extends Object>() => mGetIt.getAll<T>();
 
   bool isRegistered<T extends Object>({String? tag}) =>
-      getIt.isRegistered<T>(instanceName: tag);
+      mGetIt.isRegistered<T>(instanceName: tag);
 
   Future<void> allReady({Duration? timeout}) =>
-      getIt.allReady(timeout: timeout);
+      mGetIt.allReady(timeout: timeout);
 
   Future<void> isReady<T extends Object>({String? tag, Duration? timeout}) =>
-      getIt.isReady<T>(instanceName: tag, timeout: timeout);
+      mGetIt.isReady<T>(instanceName: tag, timeout: timeout);
 
   /// Argumentos da última rota modular aberta.
   Object? get arguments => ModularContainer.maybeInstance?.arguments;

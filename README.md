@@ -1,4 +1,4 @@
-<img align="left" src="assets/logo.png" alt="getit_flutter_module logo" width="150" style="margin-left: -10px;"/>
+<img align="left" src="https://raw.githubusercontent.com/jhonathanqz/getit_flutter_module/main/assets/logo.png" alt="getit_flutter_module logo" width="150"/>
 
 <div align="right">
   <a href="https://pub.dev/packages/getit_flutter_module"><img src="https://img.shields.io/pub/v/getit_flutter_module?style=for-the-badge&logo=dart&label=pub.dev&color=0175C2" alt="pub.dev" height="28"/></a>
@@ -55,9 +55,9 @@ class ProductsModule extends MGetItModule {
 - **🔍 Observável**: log do ciclo de vida e um `ChangeNotifier` com os escopos abertos, para montar inspectors como o do exemplo.
 
 <p align="center">
-  <img src="assets/screenshots/03-products.jpg" width="200" alt="Lista de produtos"/>
-  <img src="assets/screenshots/05-inspector-home.jpg" width="200" alt="Inspector de escopos"/>
-  <img src="assets/screenshots/06-inspector-log.jpg" width="200" alt="Log de dispose"/>
+  <img src="https://raw.githubusercontent.com/jhonathanqz/getit_flutter_module/main/assets/screenshots/03-products.jpg" width="200" alt="Lista de produtos"/>
+  <img src="https://raw.githubusercontent.com/jhonathanqz/getit_flutter_module/main/assets/screenshots/05-inspector-home.jpg" width="200" alt="Inspector de escopos"/>
+  <img src="https://raw.githubusercontent.com/jhonathanqz/getit_flutter_module/main/assets/screenshots/06-inspector-log.jpg" width="200" alt="Log de dispose"/>
 </p>
 <p align="center"><sub>App de exemplo: o inspector mostra os escopos abertos e o log de registro e dispose em tempo real.</sub></p>
 
@@ -97,7 +97,7 @@ Ou declare no `pubspec.yaml` e rode `flutter pub get`:
 
 ```yaml
 dependencies:
-  getit_flutter_module: ^0.1.0
+  getit_flutter_module: ^0.1.1
 ```
 
 Depois importe:
@@ -913,10 +913,10 @@ MGetIt.noDebugOutput = true;
 ## App de exemplo
 
 <p align="center">
-  <img src="assets/screenshots/01-login.jpg" width="180" alt="Login"/>
-  <img src="assets/screenshots/02-inspector-auth.jpg" width="180" alt="Escopos do módulo Auth"/>
-  <img src="assets/screenshots/03-products.jpg" width="180" alt="Produtos"/>
-  <img src="assets/screenshots/04-detail.jpg" width="180" alt="Detalhe do produto"/>
+  <img src="https://raw.githubusercontent.com/jhonathanqz/getit_flutter_module/main/assets/screenshots/01-login.jpg" width="180" alt="Login"/>
+  <img src="https://raw.githubusercontent.com/jhonathanqz/getit_flutter_module/main/assets/screenshots/02-inspector-auth.jpg" width="180" alt="Escopos do módulo Auth"/>
+  <img src="https://raw.githubusercontent.com/jhonathanqz/getit_flutter_module/main/assets/screenshots/03-products.jpg" width="180" alt="Produtos"/>
+  <img src="https://raw.githubusercontent.com/jhonathanqz/getit_flutter_module/main/assets/screenshots/04-detail.jpg" width="180" alt="Detalhe do produto"/>
 </p>
 
 O exemplo em [`example/`](example/) é uma loja com:

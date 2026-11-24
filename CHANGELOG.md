@@ -1,3 +1,7 @@
+## 0.1.1
+
+- README: logo e screenshots com URLs absolutas para aparecerem no pub.dev.
+
 ## 0.1.0
 
 Primeira versão.

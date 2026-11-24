@@ -64,7 +64,7 @@
   <!-- Nome -->
   <text x="512" y="808" text-anchor="middle"
         font-family="'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif"
-        font-size="112" font-weight="800" letter-spacing="-2" fill="#FFFFFF">getit_modular</text>
+        font-size="80" font-weight="800" letter-spacing="-1" fill="#FFFFFF">getit_flutter_module</text>
   <text x="512" y="878" text-anchor="middle"
         font-family="'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif"
         font-size="40" font-weight="600" letter-spacing="10" fill="#FFFFFF" fill-opacity="0.8">DI · MODULES · AUTO DISPOSE</text>

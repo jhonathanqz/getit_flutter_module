@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:getit_modular/getit_modular.dart';
+import 'package:getit_flutter_module/getit_flutter_module.dart';
 
 import '../services/log_store.dart';
 
 /// Painel flutuante que mostra, ao vivo, os escopos abertos, os binds de
-/// cada um e o log do getit_modular. Útil para ver o dispose acontecendo.
+/// cada um e o log do getit_flutter_module. Útil para ver o dispose acontecendo.
 class ScopeInspector extends StatefulWidget {
   const ScopeInspector({super.key});
 
@@ -65,7 +65,7 @@ class _ScopeInspectorState extends State<ScopeInspector> {
             ListTile(
               dense: true,
               leading: const Icon(Icons.account_tree_outlined),
-              title: const Text('getit_modular inspector'),
+              title: const Text('getit_flutter_module inspector'),
               trailing: IconButton(
                 icon: const Icon(Icons.close),
                 onPressed: () => setState(() => _expanded = false),
@@ -117,7 +117,7 @@ class _ScopeInspectorState extends State<ScopeInspector> {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       itemCount: lines.length,
       itemBuilder: (_, index) => Text(
-        lines[index].replaceFirst('[getit_modular] ', ''),
+        lines[index].replaceFirst('[getit_flutter_module] ', ''),
         style: theme.textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
       ),
     );

@@ -224,7 +224,7 @@ class ModularContainer extends ChangeNotifier {
       FlutterError.reportError(FlutterErrorDetails(
         exception: error,
         stack: stack,
-        library: 'getit_modular',
+        library: 'getit_flutter_module',
         context: ErrorDescription('while disposing a Bind'),
       ));
     }

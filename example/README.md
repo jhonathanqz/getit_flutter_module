@@ -1,6 +1,6 @@
-# getit_modular — app de exemplo
+# getit_flutter_module — app de exemplo
 
-Uma loja simples ("Mercadinho Modular") que usa os recursos do `getit_modular`.
+Uma loja simples ("Mercadinho Modular") que usa os recursos do `getit_flutter_module`.
 
 ## Rodando
 

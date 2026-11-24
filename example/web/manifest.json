@@ -1,6 +1,6 @@
 {
-    "name": "getit_modular_example",
-    "short_name": "getit_modular_example",
+    "name": "getit_flutter_module_example",
+    "short_name": "getit_flutter_module_example",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

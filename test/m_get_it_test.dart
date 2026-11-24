@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:getit_modular/getit_modular.dart';
+import 'package:getit_flutter_module/getit_flutter_module.dart';
 
 abstract class Service {}
 

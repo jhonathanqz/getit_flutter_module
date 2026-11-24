@@ -12,6 +12,6 @@ export 'src/modular/middleware.dart';
 export 'src/modular/modular_container.dart' show ModularContainer, ScopeInfo;
 export 'src/modular/route_resolver.dart' show ResolvedRoute, RouteResolver;
 export 'src/modular/routers.dart';
-export 'src/modular/widgets/getit_modular.dart';
+export 'src/modular/widgets/m_get_it_modular.dart';
 export 'src/modular/widgets/modular_page.dart';
 export 'src/modular/widgets/scoped_widgets.dart';

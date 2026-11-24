@@ -1,4 +1,4 @@
-name: getit_modular
+name: getit_flutter_module
 description: >-
   Dependency injection for Flutter with its own service locator (MGetIt)
   and modules that register on route entry and auto-dispose on exit.
@@ -13,7 +13,7 @@ topics:
   - routing
 
 screenshots:
-  - description: 'getit_modular logo'
+  - description: 'getit_flutter_module logo'
     path: assets/logo.png
 
 environment:

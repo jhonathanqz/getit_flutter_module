@@ -12,7 +12,7 @@ abstract final class ModularLogger {
   static void Function(String message) output = debugPrint;
 
   static void _log(String message) {
-    if (enabled) output('[getit_modular] $message');
+    if (enabled) output('[getit_flutter_module] $message');
   }
 
   static void enterScope(String id) => _log('🚪 enter $id');

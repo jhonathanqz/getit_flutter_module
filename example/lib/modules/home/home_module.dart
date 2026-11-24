@@ -1,4 +1,4 @@
-import 'package:getit_modular/getit_modular.dart';
+import 'package:getit_flutter_module/getit_flutter_module.dart';
 
 import '../../core/middlewares/auth_guard.dart';
 import '../cart/cart_controller.dart';

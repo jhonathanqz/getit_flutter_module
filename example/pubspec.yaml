@@ -1,5 +1,5 @@
-name: getit_modular_example
-description: Exemplo do getit_modular.
+name: getit_flutter_module_example
+description: Exemplo do getit_flutter_module.
 publish_to: none
 version: 1.0.0
 
@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  getit_modular:
+  getit_flutter_module:
     path: ../
 
 dev_dependencies:

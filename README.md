@@ -1,7 +1,7 @@
-<img align="left" src="assets/logo.png" alt="getit_modular logo" width="150" style="margin-left: -10px;"/>
+<img align="left" src="assets/logo.png" alt="getit_flutter_module logo" width="150" style="margin-left: -10px;"/>
 
 <div align="right">
-  <a href="https://pub.dev/packages/getit_modular"><img src="https://img.shields.io/pub/v/getit_modular?style=for-the-badge&logo=dart&label=pub.dev&color=0175C2" alt="pub.dev" height="28"/></a>
+  <a href="https://pub.dev/packages/getit_flutter_module"><img src="https://img.shields.io/pub/v/getit_flutter_module?style=for-the-badge&logo=dart&label=pub.dev&color=0175C2" alt="pub.dev" height="28"/></a>
   <br/>
   <img src="https://img.shields.io/badge/Flutter-%E2%89%A53.24-02569B?logo=flutter&style=for-the-badge" alt="Flutter" height="28"/>
   <br/>
@@ -13,11 +13,11 @@
 
 <br clear="both"/>
 
-# getit_modular
+# getit_flutter_module
 
 **Injeção de dependências para Flutter com módulos que sobem quando você precisa e se descartam sozinhos quando você sai.**
 
-`getit_modular` junta duas ideias:
+`getit_flutter_module` junta duas ideias:
 
 1. **Um service locator próprio (`MGetIt`)**, sem dependências externas: factories, singletons, lazy, async, parâmetros, escopos, `allReady`/`signalReady`, `dependsOn`, dispose e shadowing.
 2. **Uma camada modular inspirada no [flutter_getit](https://github.com/rodrigorahman/getit_flutter)**: você organiza o app em **módulos**, **sub-módulos** e **páginas**, e cada um declara seus `Bind`s. As dependências são registradas **só quando a rota é aberta** e **descartadas automaticamente** (com `dispose`) quando você sai da rota ou do módulo.
@@ -43,7 +43,7 @@ class ProductsModule extends MGetItModule {
 // Saiu do módulo        -> onDispose() chamado e tudo removido do MGetIt
 ```
 
-## Por que getit_modular?
+## Por que getit_flutter_module?
 
 - **🧩 Modular de verdade**: cada feature declara as próprias dependências, rotas e middlewares.
 - **♻️ Dispose automático**: ao sair da rota ou do módulo, os binds são removidos e `onDispose` é chamado. Sem vazamento de controllers.
@@ -90,20 +90,20 @@ class ProductsModule extends MGetItModule {
 Adicione o package pelo terminal:
 
 ```bash
-flutter pub add getit_modular
+flutter pub add getit_flutter_module
 ```
 
 Ou declare no `pubspec.yaml` e rode `flutter pub get`:
 
 ```yaml
 dependencies:
-  getit_modular: ^0.1.0
+  getit_flutter_module: ^0.1.0
 ```
 
 Depois importe:
 
 ```dart
-import 'package:getit_modular/getit_modular.dart';
+import 'package:getit_flutter_module/getit_flutter_module.dart';
 ```
 
 Esse import expõe tudo: o núcleo `MGetIt` e a camada modular.
@@ -116,7 +116,7 @@ Um app completo com dependências globais, dois módulos e navegação entre ele
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:getit_modular/getit_modular.dart';
+import 'package:getit_flutter_module/getit_flutter_module.dart';
 
 void main() => runApp(const App());
 
@@ -640,10 +640,10 @@ ModularLogger.output = (message) => myLogs.add(message);
 ```
 
 ```
-[getit_modular] 🚪 enter module:/Products/Detail
-[getit_modular] ➕ register Bind<ProductDetailController>(lazySingleton)
-[getit_modular] 👋 exit module:/Products/Detail
-[getit_modular] 🗑️ dispose Bind<ProductDetailController>(lazySingleton)
+[getit_flutter_module] 🚪 enter module:/Products/Detail
+[getit_flutter_module] ➕ register Bind<ProductDetailController>(lazySingleton)
+[getit_flutter_module] 👋 exit module:/Products/Detail
+[getit_flutter_module] 🗑️ dispose Bind<ProductDetailController>(lazySingleton)
 ```
 
 O `ModularContainer` é um `ChangeNotifier`, então dá para observar os escopos abertos:
@@ -885,7 +885,7 @@ MGetIt.noDebugOutput = true;
 
 ## Vindo do flutter_getit?
 
-| flutter_getit | getit_modular |
+| flutter_getit | getit_flutter_module |
 |---|---|
 | `FlutterGetIt(...)` | `MGetItModular(...)` |
 | `FlutterGetItModule` | `MGetItModule` |
@@ -948,7 +948,7 @@ Login de demonstração já vem preenchido (`dev@getit.dev` / `123456`).
 
 ```
 lib/
-├── getit_modular.dart                 # export único
+├── getit_flutter_module.dart                 # export único
 └── src/
     ├── core/                          # service locator MGetIt
     │   ├── m_get_it.dart

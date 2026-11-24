@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:getit_modular/getit_modular.dart';
+import 'package:getit_flutter_module/getit_flutter_module.dart';
 
 import '../core/services/log_store.dart';
 import '../core/widgets/scope_inspector.dart';
@@ -32,7 +32,7 @@ class App extends StatelessWidget {
       bindings: AppBindings(latency: latency),
       modules: [AuthModule(), HomeModule(), ProductsModule()],
       builder: (context, routes, isReady) => MaterialApp(
-        title: 'getit_modular',
+        title: 'getit_flutter_module',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorSchemeSeed: const Color(0xFF2E5BFF),

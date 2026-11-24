@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:getit_modular/getit_modular.dart';
+import 'package:getit_flutter_module/getit_flutter_module.dart';
 
 import '../../home/price_text.dart';
 import 'product_detail_controller.dart';

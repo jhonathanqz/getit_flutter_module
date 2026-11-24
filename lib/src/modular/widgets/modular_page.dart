@@ -99,7 +99,7 @@ class _ModularPageState extends State<ModularPage> {
       FlutterError.reportError(FlutterErrorDetails(
         exception: error,
         stack: stack,
-        library: 'getit_modular',
+        library: 'getit_flutter_module',
         context: ErrorDescription('while preparing ${widget.route.path}'),
       ));
     }

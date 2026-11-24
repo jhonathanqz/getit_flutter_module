@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:getit_modular/getit_modular.dart';
-import 'package:getit_modular_example/app/app_widget.dart';
-import 'package:getit_modular_example/core/services/app_config.dart';
-import 'package:getit_modular_example/modules/auth/auth_repository.dart';
-import 'package:getit_modular_example/modules/auth/login/login_controller.dart';
-import 'package:getit_modular_example/modules/auth/register/register_controller.dart';
-import 'package:getit_modular_example/modules/cart/cart_controller.dart';
-import 'package:getit_modular_example/modules/products/detail/product_detail_controller.dart';
-import 'package:getit_modular_example/modules/products/products_controller.dart';
-import 'package:getit_modular_example/modules/products/recently_viewed.dart';
-import 'package:getit_modular_example/modules/profile/profile_controller.dart';
+import 'package:getit_flutter_module/getit_flutter_module.dart';
+import 'package:getit_flutter_module_example/app/app_widget.dart';
+import 'package:getit_flutter_module_example/core/services/app_config.dart';
+import 'package:getit_flutter_module_example/modules/auth/auth_repository.dart';
+import 'package:getit_flutter_module_example/modules/auth/login/login_controller.dart';
+import 'package:getit_flutter_module_example/modules/auth/register/register_controller.dart';
+import 'package:getit_flutter_module_example/modules/cart/cart_controller.dart';
+import 'package:getit_flutter_module_example/modules/products/detail/product_detail_controller.dart';
+import 'package:getit_flutter_module_example/modules/products/products_controller.dart';
+import 'package:getit_flutter_module_example/modules/products/recently_viewed.dart';
+import 'package:getit_flutter_module_example/modules/profile/profile_controller.dart';
 
 const latency = Duration(milliseconds: 50);
 

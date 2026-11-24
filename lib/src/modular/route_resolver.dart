@@ -60,7 +60,7 @@ abstract final class RouteResolver {
 
     void add(ResolvedRoute route) {
       if (result.containsKey(route.path)) {
-        throw ArgumentError('getit_modular: rota duplicada "${route.path}"');
+        throw ArgumentError('getit_flutter_module: rota duplicada "${route.path}"');
       }
       result[route.path] = route;
     }

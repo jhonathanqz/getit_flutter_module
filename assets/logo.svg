@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3B5BFF"/>
+      <stop offset="0.55" stop-color="#2E7BEF"/>
+      <stop offset="1" stop-color="#00C2A8"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/>
+      <stop offset="0.45" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="amber" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFD866"/>
+      <stop offset="1" stop-color="#FFA726"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#0B1B6B" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Fundo -->
+  <rect x="32" y="32" width="960" height="960" rx="220" fill="url(#bg)"/>
+  <rect x="32" y="32" width="960" height="960" rx="220" fill="url(#shine)"/>
+
+  <!-- Linhas de dependência (injeção) -->
+  <g stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" fill="none" opacity="0.55">
+    <line x1="409" y1="297" x2="409" y2="503"/>
+    <line x1="409" y1="503" x2="615" y2="503"/>
+    <line x1="409" y1="297" x2="615" y2="503"/>
+  </g>
+  <path d="M 615 503 Q 700 380 690 250" stroke="#FFD866" stroke-width="12"
+        stroke-linecap="round" stroke-dasharray="4 26" fill="none"/>
+
+  <!-- Slot vazio do módulo que está sendo encaixado -->
+  <rect x="530" y="212" width="170" height="170" rx="40" fill="#FFFFFF" fill-opacity="0.08"
+        stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="8" stroke-dasharray="22 16"/>
+
+  <!-- Módulos ativos -->
+  <g filter="url(#shadow)">
+    <rect x="324" y="212" width="170" height="170" rx="40" fill="#FFFFFF"/>
+    <rect x="324" y="418" width="170" height="170" rx="40" fill="#FFFFFF"/>
+    <rect x="530" y="418" width="170" height="170" rx="40" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Conectores (pontos de injeção) -->
+  <g fill="#2E5BFF">
+    <circle cx="409" cy="297" r="26"/>
+    <circle cx="409" cy="503" r="26"/>
+    <circle cx="615" cy="503" r="26"/>
+  </g>
+  <g fill="#00C2A8">
+    <circle cx="409" cy="297" r="10"/>
+    <circle cx="409" cy="503" r="10"/>
+    <circle cx="615" cy="503" r="10"/>
+  </g>
+
+  <!-- Módulo sendo plugado / descartado -->
+  <g transform="translate(690 205) rotate(14)" filter="url(#shadow)">
+    <rect x="-85" y="-85" width="170" height="170" rx="40" fill="url(#amber)"/>
+    <circle cx="0" cy="0" r="26" fill="#FFFFFF"/>
+    <circle cx="0" cy="0" r="10" fill="#FFA726"/>
+  </g>
+
+  <!-- Nome -->
+  <text x="512" y="808" text-anchor="middle"
+        font-family="'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif"
+        font-size="112" font-weight="800" letter-spacing="-2" fill="#FFFFFF">getit_modular</text>
+  <text x="512" y="878" text-anchor="middle"
+        font-family="'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif"
+        font-size="40" font-weight="600" letter-spacing="10" fill="#FFFFFF" fill-opacity="0.8">DI · MODULES · AUTO DISPOSE</text>
+</svg>

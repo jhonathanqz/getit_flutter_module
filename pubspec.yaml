@@ -1,0 +1,30 @@
+name: getit_modular
+description: >-
+  Dependency injection for Flutter with a get_it-compatible service locator
+  and modules that register on route entry and auto-dispose on exit.
+version: 0.1.0
+
+topics:
+  - dependency-injection
+  - service-locator
+  - modular
+  - get-it
+  - routing
+
+screenshots:
+  - description: 'getit_modular logo'
+    path: assets/logo.png
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+  flutter: ">=3.24.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  meta: ^1.15.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
